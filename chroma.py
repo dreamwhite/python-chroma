@@ -1,6 +1,6 @@
 from datetime import datetime
 
-class Chroma():
+class Chroma:
 
     """
     This class contains all the functions needed to create custom colorful text

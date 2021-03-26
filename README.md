@@ -28,7 +28,7 @@ Jokes aside, I'm slowly approaching to coding, despite I """know""" Python (fait
 * [✔️] The best alternative to the raw print statement
 
 ## 👔 Screenshot
-[![Chroma Logger for Python](.github/assets/screenshots/chroma-logger-screen1.png)](.github/assets/screenshot/chroma-logger-screen1.png)
+[![Chroma Logger for Python](.github/assets/screenshots/chroma-logger-screen1.png)](.github/assets/screenshots/chroma-logger-screen1.png)
 
 ## 🚀 Installation
 1. Usage:

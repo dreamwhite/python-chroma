@@ -6,10 +6,21 @@ class Chroma():
     This class contains all the functions needed to create custom colorful text
     """
 
-    RESET = '\033[0m'
+    reset = '\033[0m'
 
-    def getColorCode(self, red: int, green: int, blue: int, background: bool = False) -> str:
+    def __init__(self, information_header='INFORMATION', warning_header='WARNING', error_header='ERROR', debug_header='DEBUG',
+                sponsor_header='SPONSOR', stackoverflow_header='STACKOVERFLOW', documentation_header='DOCUMENTATION'):
 
+                self.information_header = information_header
+                self.warning_header = warning_header
+                self.error_header = error_header
+                self.debug_header = debug_header
+                self.sponsor_header = sponsor_header
+                self.stackoverflow_header = stackoverflow_header
+                self.documentation_header = documentation_header
+                self.fg_color_code = self.get_color_code(255,255,255)
+
+    def get_color_code(self, red: int, green: int, blue: int, background: bool = False) -> str:
         """Generate a custom color code based off RGB and background/foreground parameters.
 
             Keyword arguments:
@@ -27,115 +38,73 @@ class Chroma():
         colorCode = f"\033[{48 if background else 38};2;{red};{green};{blue}m"
         return colorCode
 
-    def getHeader(self, header: str) -> str:
+    def get_header(self, header: str) -> str:
             MAX_HEADER_LENGTH = 16 #TODO: for the dreamwhite of the future make this parameter customizable from a settings.ini file
             if (len(header) > MAX_HEADER_LENGTH):
                 return header[0:MAX_HEADER_LENGTH]
             else:
                 return header.ljust(MAX_HEADER_LENGTH)
 
-    def getDate(self) -> str:
-        DATE_BACKGROUND = self.getColorCode(44, 62, 80, True)
+    def get_date(self) -> str:
+        DATE_BACKGROUND = self.get_color_code(44, 62, 80, True)
         CURRENT_DATE = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return f"{DATE_BACKGROUND} {CURRENT_DATE.ljust(20)}"
 
-    def getColoredMessage(self, colorCode: str, message: str) -> str:
-        return f"{colorCode}{message}{self.RESET}"
+    def string_builder(self, bg_color_code: str, fg_color_code: str, printed_header: str, text_colorCode: str, message: str) -> str:
+        return ''.join([
+            bg_color_code,
+            fg_color_code,
+            ' | ',
+            printed_header,
+            self.get_date(),
+            self.reset,
+            bg_color_code,
+            ' ',
+            self.reset,
+            ' ',
+            text_colorCode,
+            message,
+            self.reset
+        ])
 
-    def informationMessage(self, message: str) -> str:
-        HEADER = "INFORMATION"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(46, 204, 113, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(46, 204, 113)
+    def information(self, message: str) -> str:        
+        printed_header = self.get_header(self.information_header)
+        bg_color_code = self.get_color_code(46, 204, 113, True)
+        text_colorCode = self.get_color_code(46, 204, 113)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))
 
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
+    def warning(self, message: str) -> str:
+        printed_header = self.get_header(self.warning_header)
+        bg_color_code = self.get_color_code(243, 156, 18, True)
+        text_colorCode = self.get_color_code(243,156,18)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))
 
-    def warningMessage(self, message: str) -> str:
-        HEADER = "WARNING"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(243, 156, 18, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(243,156,18)
+    def error(self, message: str) -> str:
+        printed_header = self.get_header(self.error_header)
+        bg_color_code = self.get_color_code(192, 57, 43, True)
+        text_colorCode = self.get_color_code(192, 57, 43)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))
 
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
+    def debug(self, message: str) -> str:
+        printed_header = self.get_header(self.debug_header)
+        bg_color_code = self.get_color_code(155, 89, 182, True)
+        text_colorCode = self.get_color_code(155, 89, 182)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))
 
-    def errorMessage(self, message: str) -> str:
-        HEADER = "ERROR"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(192, 57, 43, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(192, 57, 43)
+    def sponsor(self, message: str) -> str:
+        printed_header = self.get_header(self.sponsor_header)
+        bg_color_code = self.get_color_code(22, 160, 133, True)
+        text_colorCode = self.get_color_code(22, 160, 133)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))
 
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
+    def stackoverflow(self, message: str) -> str:
+        printed_header = self.get_header(self.stackoverflow_header)
+        bg_color_code = self.get_color_code(41, 128, 185, True)
+        text_colorCode = self.get_color_code(41, 128, 185)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))
 
-    def debugMessage(self, message: str) -> str:
-        HEADER = "DEBUG"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(155, 89, 182, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(155, 89, 182)
-
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
-
-    def sponsorMessage(self, message: str) -> str:
-        HEADER = "SPONSOR"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(22, 160, 133, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(22, 160, 133)
-
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
-
-    def stackOverflowMessage(self, message: str) -> str:
-        HEADER = "STACKOVERFLOW"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(41, 128, 185, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(41, 128, 185)
-
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
-
-    def documentationMessage(self, message: str) -> str:
-        HEADER = "DOCUMENTATION"
-        
-        printed_header = self.getHeader(HEADER)
-        bg_colorCode = self.getColorCode(236, 135, 191, True)
-        fg_colorCode = self.getColorCode(255,255,255)
-        text_colorCode = self.getColorCode(236, 135, 191)
-
-        final_string = f"{bg_colorCode}{fg_colorCode} | "
-        final_string += f"{printed_header}"
-        final_string += f"{self.getDate()}"
-        final_string += f"{self.RESET}{bg_colorCode} {self.RESET} {text_colorCode}{message}{self.RESET}" 
-        print(final_string)
+    def documentation(self, message: str) -> str:
+        printed_header = self.get_header(self.documentation_header)
+        bg_color_code = self.get_color_code(236, 135, 191, True)
+        text_colorCode = self.get_color_code(236, 135, 191)
+        print(self.string_builder(bg_color_code, self.fg_color_code, printed_header, text_colorCode, message))

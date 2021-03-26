@@ -19,6 +19,7 @@ class Chroma:
                 self.stackoverflow_header = stackoverflow_header
                 self.documentation_header = documentation_header
                 self.fg_color_code = self.get_color_code(255,255,255)
+                self.date = self.get_date()
 
     def get_color_code(self, red: int, green: int, blue: int, background: bool = False) -> str:
         """Generate a custom color code based off RGB and background/foreground parameters.
@@ -39,16 +40,16 @@ class Chroma:
         return colorCode
 
     def get_header(self, header: str) -> str:
-            MAX_HEADER_LENGTH = 16 #TODO: for the dreamwhite of the future make this parameter customizable from a settings.ini file
-            if (len(header) > MAX_HEADER_LENGTH):
-                return header[0:MAX_HEADER_LENGTH]
+            max_header_length = 16 #TODO: for the dreamwhite of the future make this parameter customizable from a settings.ini file
+            if (len(header) > max_header_length):
+                return header[0:max_header_length]
             else:
-                return header.ljust(MAX_HEADER_LENGTH)
+                return header.ljust(max_header_length)
 
     def get_date(self) -> str:
-        DATE_BACKGROUND = self.get_color_code(44, 62, 80, True)
-        CURRENT_DATE = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        return f"{DATE_BACKGROUND} {CURRENT_DATE.ljust(20)}"
+        date_background = self.get_color_code(44, 62, 80, True)
+        current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return f"{date_background} {current_date.ljust(20)}"
 
     def string_builder(self, bg_color_code: str, fg_color_code: str, printed_header: str, text_colorCode: str, message: str) -> str:
         return ''.join([
@@ -56,7 +57,7 @@ class Chroma:
             fg_color_code,
             ' | ',
             printed_header,
-            self.get_date(),
+            self.date,
             self.reset,
             bg_color_code,
             ' ',

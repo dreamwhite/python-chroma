@@ -32,7 +32,7 @@ class Chroma():
             if (len(header) > MAX_HEADER_LENGTH):
                 return header[0:MAX_HEADER_LENGTH]
             else:
-                return header.ljust(16)
+                return header.ljust(MAX_HEADER_LENGTH)
 
     def getDate(self) -> str:
         DATE_BACKGROUND = self.getColorCode(44, 62, 80, True)

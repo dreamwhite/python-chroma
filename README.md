@@ -31,8 +31,7 @@ Jokes aside, I'm slowly approaching to coding, despite I """know""" Python (fait
 [![Chroma Logger for Python](.github/assets/screenshots/chroma-logger-screen1.png)](.github/assets/screenshot/chroma-logger-screen1.png)
 
 ## 🚀 Installation
-1. In your Python project run: `npm install @ptkdev/logger --save`
-2. Usage:
+1. Usage:
 ```python
 from Chroma import Color
 logger = Color();

@@ -57,6 +57,10 @@ See folder `examples`, run with `python3 example.py`.
 
 I AM THE DOCUMENTATION
 
+## ⚠️ Issues
+
+If you encounter any issue, please file a bugreport [here](https://github.com/dreamwhite/bugtracker/issues/new?assignees=dreamwhite&labels=bug&template=generic.md&title=)
+
 ## 👨‍💻 Contributing
 
 I'd really like if you submit a pull request!

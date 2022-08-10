@@ -67,4 +67,5 @@ I'd really like if you submit a pull request!
 What made me write this $hitty code (yeah i'm not a dev tho), is learning new stuff. Feel free to destroy my code haha
 
 ## 💫 License
-Still need to decided which license I wanna apply there. Probably MIT tho
+
+This project is GPL V3 licensed
